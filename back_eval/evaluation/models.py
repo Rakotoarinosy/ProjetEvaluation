@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.hashers import make_password, check_password
 
 # Create your models here.
 class Role(models.Model):
@@ -49,12 +50,18 @@ class Status(models.Model):
         return self.label
 
 class Compte(models.Model):
-    label = models.CharField(max_length=50)
-    idLycee = models.ForeignKey(Lycee, verbose_name=("relation Lycee"), on_delete=models.SET_NULL,null=True)
+    label = models.CharField(max_length=50, unique=True)  # Champ unique pour l'identifiant de connexion
+    mot_de_passe = models.CharField(max_length=128)  # Champ pour le mot de passe haché
+    idLycee = models.ForeignKey(Lycee, verbose_name=("relation Lycee"), on_delete=models.SET_NULL, null=True)
     
     def __str__(self):
         return self.label
-    
+
+    def set_password(self, raw_password):
+        self.mot_de_passe = make_password(raw_password)  # Hachage du mot de passe
+
+    def check_password(self, raw_password):
+        return check_password(raw_password, self.mot_de_passe)  # Vérification du mot de passe    
     
 class Evaluation(models.Model):
     date = models.DateField(auto_now=True)
