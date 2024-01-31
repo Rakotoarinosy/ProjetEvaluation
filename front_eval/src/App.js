@@ -1,24 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+import { ToastContainer } from "react-bootstrap";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import PublicRoute from "./routes/PublicRoute";
+import AdminRoute from "./routes/AdminRoute";
+import AuthRoute from "./routes/AuthRoute";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload. Test
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+        <ToastContainer position='top-center'/>
+        <Routes>    
+            <Route path="/*" element={<AuthRoute/>}/>
+            <Route path="/admin/*" element={<AdminRoute/>}/>
+            <Route path="/etudiant/*" element={<PublicRoute/>}/>
+        </Routes>  
+    </BrowserRouter>
   );
 }
 

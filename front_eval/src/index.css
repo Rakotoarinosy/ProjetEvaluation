@@ -11,3 +11,41 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+/*======= CSS variables =======*/
+:root {
+  --white-color: #fff;
+  --orange-color: #ED7220;
+  --dark-color: color: rgba(6, 6, 6, 0.7);;
+  --gray-color: #63615E;
+  --green-color : rgba(7, 239, 73, 0.6);
+  --bleu-color: #0075B7;
+  --body-bg-color: #202834;
+  --section-bg-color: #202834;
+  --navigation-item-hover-color: #3b5378;
+ 
+  --text-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+  --box-shadow-navbar: 0px 0px 4px 0px rgba(39, 37, 37, 0.6);
+
+  --scroll-bar-color: #fff;
+  --scroll-color: #454f6b;
+  --background-color-1: #0075B7;
+  --background-color-2: #FFFFFFFF;
+  --sidebar-color: #2B2B2B;
+  --sidebar-color2: #272626;
+}
+
+
+/*======= Scroll bar =======*/
+::-webkit-scrollbar {
+  width: 11px;
+  background: var(--scroll-bar-color);
+}
+
+::-webkit-scrollbar-thumb {
+  width: 100%;
+  background: var(--scroll-color);
+  border-radius: 2em;
+  filter: blur(5px);
+}
