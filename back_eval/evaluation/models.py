@@ -5,18 +5,27 @@ from django.contrib.auth.hashers import make_password, check_password
 class Role(models.Model):
     nomRole = models.CharField(max_length=50)
     
+class Lycee(models.Model):
+    nomLycee = models.CharField(max_length=250)
+    
+    def __str__(self) -> str:
+        return self.nomLycee
+    
+class Classe(models.Model):
+    nomClasse = models.CharField(max_length=50)
+    idLycee = models.ForeignKey(Lycee, verbose_name=("relation Lycee"), on_delete=models.SET_NULL, null=True)
+    
+    def __str__(self) -> str:
+        return self.nomClasse
+    
 class User(models.Model):
     nomUser = models.CharField(max_length=250)
     emailUser = models.EmailField(max_length=254)
+    idClasse = models.ForeignKey(Classe, verbose_name=("relation classe"), on_delete=models.SET_NULL, null=True)
     
     def __str__(self) -> str:
         return self.nomUser
 
-class Classe(models.Model):
-    nomClasse = models.CharField(max_length=50)
-    
-    def __str__(self) -> str:
-        return self.nomClasse
 
 class Prof(models.Model):
     nomProf = models.CharField(max_length=250)
@@ -24,11 +33,9 @@ class Prof(models.Model):
     def __str__(self) -> str:
         return self.nomProf
     
-class Lycee(models.Model):
-    nomLycee = models.CharField(max_length=250)
-    
-    def __str__(self) -> str:
-        return self.nomLycee
+class ClasseProf(models.Model):
+    idClasse = models.ForeignKey(Classe, verbose_name=("relation classe"), on_delete=models.SET_NULL, null=True)
+    idProf = models.ForeignKey(Prof, verbose_name=("relation prof"), on_delete=models.SET_NULL, null=True)
     
 class Matiere(models.Model):
     nomMatiere = models.CharField(max_length=50)
@@ -51,8 +58,9 @@ class Status(models.Model):
 
 class Compte(models.Model):
     label = models.CharField(max_length=50, unique=True)  # Champ unique pour l'identifiant de connexion
-    mot_de_passe = models.CharField(max_length=128)  # Champ pour le mot de passe haché
+    mot_de_passe = models.CharField(max_length=128,default='')  # Champ pour le mot de passe haché
     idLycee = models.ForeignKey(Lycee, verbose_name=("relation Lycee"), on_delete=models.SET_NULL, null=True)
+    idRole = models.ForeignKey(Role, verbose_name=("relation Role"), on_delete=models.SET_NULL, null=True)
     
     def __str__(self):
         return self.label
