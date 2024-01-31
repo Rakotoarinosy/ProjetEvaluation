@@ -1,12 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import { FaBars, FaEllipsisV, FaTachometerAlt, FaUser } from 'react-icons/fa';
+import { FaBars, FaBook, FaChalkboardTeacher, FaEllipsisV, FaTachometerAlt, FaUser } from 'react-icons/fa';
+import { MdMeetingRoom } from "react-icons/md";
+import { PiStudentFill } from "react-icons/pi";
 import { Link, useLocation } from 'react-router-dom';
 
 const ASidebar = () => {
 
     const [activeTab, setActiveTab] = useState('Dashboard')
     const location = useLocation()
+    const [reduice, setReduice] = useState(false)
 
+    const reduiceSidebar = () => {
+        const sidebarSolarma =  document.getElementById("sidebarFront");
+        const logoS =  document.getElementById("logoS");
+
+        sidebarSolarma.classList.toggle("miniSidebar");
+        logoS.classList.toggle("logoReduice");
+    }
+
+    const reduiceTab = () => {
+        setReduice(true)
+    }
+    const agrandirTab = () => {
+        setReduice(false)
+    }
     useEffect(() => {
         if(location.pathname === '/admin'){
             setActiveTab('Dashboard')
@@ -19,27 +36,27 @@ const ASidebar = () => {
         }else if (location.pathname === '/admin/matiere'){
             setActiveTab('Matiere')
         }
-        
     }, [location.pathname])
     return (
         <div className=''>
             <div className='logo-place'>
                <div className='logo' id='logoS'>
-                    <div className='logo_min' id='mini-logo'><img src='../media/school.png' alt='logo'/></div>
+                    <div className='logo_min' id='mini-logo'><img src='../media/logo.png' alt='logo'/></div>
                </div>
                <div className='icon-bar'>
-                    <div className='reduce_sidebar'><FaBars/></div>
+                    <div className={`${!reduice ? "reduce_sidebar" : "desactiveMaxSidebar"}`} onClick={() => { reduiceSidebar(); reduiceTab(); }}><i><FaBars/></i></div>
+                    <div className={`${reduice ? "reduce_sidebar" : "desactiveMaxSidebar"}`} onClick={() => { reduiceSidebar(); agrandirTab(); }}><i><FaBars/></i></div>
                </div>
             </div>
             <div className='profile-sidebar'>
                 <div className='profile-image'>
                     <div className='' id='profile-image'><img src='../media/user.png' alt='profile'/></div>
                 </div>
-                <div className='profile-information' id='info-profile'>
+                <div className={`${!reduice ? "profile-information" : "desactiveMaxSidebar"}`}>
                     <div><span className='info-nom'>Mickael</span></div>
                     <div><span className='info-fonction'>Administrateur</span></div>
                 </div>
-                <div className='profile-parametre' id='info-parametre'>
+                <div className={`${!reduice ? "profile-parametre" : "desactiveMaxSidebar"}`} id='info-parametre'>
                     <i><FaEllipsisV/></i>
                 </div>
             </div>
@@ -49,31 +66,31 @@ const ASidebar = () => {
                 <Link to='/admin'>
                     <li className={`${activeTab === "Dashboard" ? "active" : ""}`} onClick={() => setActiveTab("Dashboard")}>
                         <i className=''><FaTachometerAlt/></i>
-                        <span id='nav1'>Dashboard</span>
+                        <span className={`${!reduice ? "" : "desactiveMaxSidebar"}`}>Dashboard</span>
                     </li>
                 </Link>
                 <Link to='/admin/prof'>
                     <li className={`${activeTab === "Prof" ? "active" : ""}`} onClick={() => setActiveTab("Prof")}>
-                        <i className=''><FaUser/></i>
-                        <span id='nav2'>Professeur</span>
+                        <i className=''><FaChalkboardTeacher/></i>
+                        <span className={`${!reduice ? "" : "desactiveMaxSidebar"}`}>Professeur</span>
                     </li>
                 </Link>
                 <Link to='/admin/etudiant'>
                     <li className={`${activeTab === "Etudiant" ? "active" : ""}`} onClick={() => setActiveTab("Etudiant")} >
-                        <i className=''><FaUser/></i>
-                        <span id='nav3'>Etudiant</span>
+                        <i className=''><PiStudentFill/></i>
+                        <span className={`${!reduice ? "" : "desactiveMaxSidebar"}`}>Etudiant</span>
                     </li>
                 </Link>
                 <Link to='/admin/classe'>
                     <li className={`${activeTab === "Classe" ? "active" : ""}`} onClick={() => setActiveTab("Classe")}>
-                        <i className=''><FaUser/></i>
-                        <span id='nav4'>Classe</span>
+                        <i className=''><MdMeetingRoom/></i>
+                        <span className={`${!reduice ? "" : "desactiveMaxSidebar"}`}>Classe</span>
                     </li>
                 </Link>
                 <Link to='/admin/matiere'>
                     <li className={`${activeTab === "Matiere" ? "active" : ""}`} onClick={() => setActiveTab("Matiere")}>
-                        <i className=''><FaUser/></i>
-                        <span id='nav6'>Matiere</span>
+                        <i className=''><FaBook/></i>
+                        <span className={`${!reduice ? "" : "desactiveMaxSidebar"}`}>Matiere</span>
                     </li>
                 </Link>  
             </div>

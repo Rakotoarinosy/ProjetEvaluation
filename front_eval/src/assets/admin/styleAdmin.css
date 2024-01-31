@@ -113,13 +113,13 @@
                 margin-left: 60px;
             }
                 .logo-place .logo img{
-                    width: 100px;
+                    width: 200px;
                 }
                 .logo-place .logo .logo_min{
                     width: 65px;
                 }
                     .logo .logo_min{
-                        display: none;
+                        /* display: none; */
                     }
             .logo-place .icon-bar .reduce_sidebar{
                 cursor: pointer;
@@ -170,6 +170,10 @@
             .navigation li span{
                 letter-spacing: 1px;
              }
+
+             .navigation li .labelSide{
+                visibility: visible;
+             }
                
             .navigation li:hover{
                 background-color: var(--bleu-color);
@@ -204,6 +208,25 @@
                 .navigation li span{
                    margin-left: 10px;
                 }
+        /**
+        *  REDUIRE SIDEBAR
+        */
+        .logo_min.activeMiniSidebar{
+            display: block;
+        }
+        .desactiveMaxSidebar{
+            display: none;
+        }
+        .navigation li .labelSideReduice{
+            visibility: visible;
+        }
+
+        .sidebar_admin.miniSidebar{
+            width: 100px;
+        }
+        .logo.logoReduice{        
+            margin-left: 0px;
+        }
 
 
 
