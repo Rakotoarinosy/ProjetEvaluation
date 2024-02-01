@@ -138,3 +138,11 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+
+AUTH_USER_MODEL = 'evaluation.Compte'
+
+AUTHENTICATION_BACKENDS = [
+    'evaluation.backends.MonBackendPersonnalise',
+    'django.contrib.auth.backends.ModelBackend', # Conservez ceci pour le comportement par défaut
+]

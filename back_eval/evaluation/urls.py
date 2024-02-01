@@ -15,12 +15,17 @@ Including another URLconf
 """
 from django.urls import path
 
-from .views import classe, classes, prof, profs
+from .views import newlogin, classe, classes, createCompte, prof, profs, user, users, post
 
 urlpatterns = [
     path("classe/", classe, name="classe"),
     path("classes/", classes, name="classes"),
     path("prof/", prof, name="prof"),
     path("profs/", profs, name="profs"),
+    path("user/", user, name="user"),
+    path("users/", users, name="users"),
+    path("createCompte/", createCompte, name="CreateCompte"),
+    path("loginvaovao/", newlogin, name="loginvao"),
+    path('login/', post, name='api-login'), # type: ignore
 
 ]

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.hashers import make_password, check_password
+from django.contrib.auth.models import AbstractBaseUser
 
 # Create your models here.
 class Role(models.Model):
@@ -55,21 +56,33 @@ class Status(models.Model):
     
     def __str__(self):
         return self.label
+    
+import secrets
+import string
 
-class Compte(models.Model):
-    label = models.CharField(max_length=50, unique=True)  # Champ unique pour l'identifiant de connexion
-    mot_de_passe = models.CharField(max_length=128,default='')  # Champ pour le mot de passe haché
+class Compte(AbstractBaseUser):
+    label = models.CharField(max_length=50, unique=True)
+    mot_de_passe = models.CharField(max_length=128, default='')
     idLycee = models.ForeignKey(Lycee, verbose_name=("relation Lycee"), on_delete=models.SET_NULL, null=True)
     idRole = models.ForeignKey(Role, verbose_name=("relation Role"), on_delete=models.SET_NULL, null=True)
     
+    USERNAME_FIELD = 'label'
+    REQUIRED_FIELDS = []
+
     def __str__(self):
         return self.label
 
-    def set_password(self, raw_password):
-        self.mot_de_passe = make_password(raw_password)  # Hachage du mot de passe
+    def save(self, *args, **kwargs):
+        if not self.mot_de_passe:
+            # Générer un mot de passe aléatoire s'il n'est pas déjà défini
+            self.mot_de_passe = ''.join(secrets.choice(string.ascii_letters + string.digits) for _ in range(12))
+        elif not self.mot_de_passe.startswith('pbkdf2_sha256'):  # Vérifie si le mot de passe n'est pas déjà haché
+            self.mot_de_passe = make_password(self.mot_de_passe)
+        return super().save(*args, **kwargs)
 
     def check_password(self, raw_password):
-        return check_password(raw_password, self.mot_de_passe)  # Vérification du mot de passe    
+        return check_password(raw_password, self.mot_de_passe)
+
     
 class Evaluation(models.Model):
     date = models.DateField(auto_now=True)
