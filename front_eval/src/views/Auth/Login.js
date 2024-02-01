@@ -9,7 +9,7 @@ const Login = () => {
 
     const handleLogin = async() => {
       try {
-        const rep = await axios.post('http://localhost:8000/login/',{ label: username, mot_de_passe: password})
+        const rep = await axios.post('http://localhost:8000/loginvaovao/',{ label: username, mot_de_passe: password})
         console.log(rep.data)
       } catch (error) { 
         console.error(error.rep.data);

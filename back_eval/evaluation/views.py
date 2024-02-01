@@ -1,6 +1,5 @@
 import json
 from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.shortcuts import render
@@ -82,9 +81,7 @@ def createCompte(request):
             return Response(serializer.data)
         else:
             return Response(serializer.errors)
-
-@csrf_exempt
-@api_view(['POST'])      
+        
 def post(self, request):
     label = request.data.get('label')
     mot_de_passe = request.data.get('mot_de_passe')
@@ -100,24 +97,6 @@ def post(self, request):
         # Échec de l'authentification
         return Response({'error': 'Identifiant ou mot de passe incorrect'}, status=status.HTTP_401_UNAUTHORIZED)
 
-
-@csrf_exempt
-@api_view(['POST'])
-def newlogin(request):
-    if request.method == 'POST':
-        data = json.loads(request.body)
-        username = data.get('label')
-        password = data.get('mot_de_passe')
-        user = authenticate(request, label=username, mot_de_passe=password)
-        print(user)
-        
-        if user is not None:
-            login(request, user)
-            print("mety")
-            return JsonResponse({'message': 'Connexion réussie'})
-        else:
-            print("tsy mety")
-            return JsonResponse({'message': 'Nom d\'utilisateur ou mot de passe incoreecte'})
         
     
     

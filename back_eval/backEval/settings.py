@@ -146,3 +146,7 @@ AUTHENTICATION_BACKENDS = [
     'evaluation.backends.MonBackendPersonnalise',
     'django.contrib.auth.backends.ModelBackend', # Conservez ceci pour le comportement par défaut
 ]
+
+
+CORS_ALLOW_ALL_ORIGINS = True
+CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
